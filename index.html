@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharmacy Shift Report</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Pharmacy Shift Report</h1>
+      <div id="clock"></div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+      <div class="buttons-card">
+        <button class="nav-btn add" onclick="showPage('addReport')">Add Report</button>
+        <button class="nav-btn latest" onclick="showPage('latestReports')">Latest Reports</button>
+        <button class="nav-btn view" onclick="showPage('viewReports')">View All Reports</button>
+      </div>
+    </div>
+
+    <!-- Add Report Page -->
+    <div id="addReportPage" class="page">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <div class="card">
+        <h2 class="card-title">Add New Shift Report</h2>
+        <div id="alertContainer"></div>
+        <form id="reportForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label required">Employee Name</label>
+              <input type="text" class="form-input" id="employeeName" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label required">Badge Number</label>
+              <input type="text" class="form-input" id="badgeNumber" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label required">Your Section</label>
+              <select class="form-select" id="section" required>
+                <option value="">Select Your Section</option>
+                <option>Inpatient Pharmacy</option>
+                <option>Outpatient Pharmacy</option>
+                <option>Clinical Services</option>
+                <option>Material Management</option>
+                <option>OR Pharmacy</option>
+                <option>ER Pharmacy</option>
+                <option>IV</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Shift (Optional)</label>
+              <select class="form-select" id="shift">
+                <option value="">Select Shift</option>
+                <option>Morning</option>
+                <option>Evening</option>
+                <option>Night</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Send to Section (Optional)</label>
+            <select class="form-select" id="sendToSection">
+              <option value="">Select Section to Notify</option>
+              <option>Inpatient Pharmacy</option>
+              <option>Outpatient Pharmacy</option>
+              <option>Clinical Services</option>
+              <option>Material Management</option>
+              <option>OR Pharmacy</option>
+              <option>ER Pharmacy</option>
+              <option>IV</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label required">Shift Report</label>
+            <textarea class="form-textarea" id="reportContent" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Save Report</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Latest Reports Page -->
+    <div id="latestReportsPage" class="page">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <div class="card">
+        <h2 class="card-title">Latest Reports by Sections</h2>
+        <div id="latestReportsList"></div>
+      </div>
+    </div>
+
+    <!-- View Reports Page -->
+    <div id="viewReportsPage" class="page">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <button class="btn-export" onclick="exportToCSV()">Export to CSV</button>
+      <div class="card">
+        <div class="filter-section">
+          <h3 class="filter-title">Filter Reports</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Section</label>
+              <select class="form-select" id="filterSect" onchange="filterReports()">
+                <option value="">All Sections</option>
+                <option>Inpatient Pharmacy</option>
+                <option>Outpatient Pharmacy</option>
+                <option>Clinical Services</option>
+                <option>Material Management</option>
+                <option>OR Pharmacy</option>
+                <option>ER Pharmacy</option>
+                <option>IV</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Shift</label>
+              <select class="form-select" id="filterShift" onchange="filterReports()">
+                <option value="">All Shifts</option>
+                <option>Morning</option>
+                <option>Evening</option>
+                <option>Night</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date From</label>
+              <input type="date" class="form-input" id="filterDateFrom" onchange="filterReports()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date To</label>
+              <input type="date" class="form-input" id="filterDateTo" onchange="filterReports()">
+            </div>
+          </div>
+        </div>
+        <h2 class="card-title">All Reports</h2>
+        <div id="allReportsList"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div id="reportsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalSectionTitle"></h3>
+      <div id="modalReportsList"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="quote">"Pharmacy today blends science, compassion, and technology. Whenever you think of health… think of pharmacists."<br>— Dr. Shaker Alnufaie, Director of Pharmaceutical Care Services</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
